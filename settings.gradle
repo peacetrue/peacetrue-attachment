@@ -1,0 +1,6 @@
+rootProject.name = "peacetrue-attachment"
+include("peacetrue-attachment-service-api")
+include("peacetrue-attachment-service-impl")
+include("peacetrue-attachment-controller")
+include("peacetrue-attachment-app")
+include("peacetrue-attachment-client")
