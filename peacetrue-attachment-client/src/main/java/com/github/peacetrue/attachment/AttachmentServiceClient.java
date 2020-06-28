@@ -19,7 +19,7 @@ import javax.annotation.Nullable;
  *
  * @author xiayx
  */
-@ReactiveFeignClient(name = "peacetrue-attachment")
+@ReactiveFeignClient(name = "peacetrue-attachment", url = "${peacetrue.attachment.url:${peacetrue.server.url:}}")
 public interface AttachmentServiceClient extends AttachmentService {
 
     @PostMapping(value = "/attachments")
