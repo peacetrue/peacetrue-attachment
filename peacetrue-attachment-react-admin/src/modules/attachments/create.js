@@ -10,7 +10,7 @@ export const AttachmentCreate = (props) => {
                 <TextInput label={'路径'} source="path" validate={required()}/>
                 <TextInput label={'大小（字节）'} source="size" validate={required()}/>
                 <TextInput label={'状态编码：临时、生效、删除'} source="stateCode" validate={required()}/>
-                <TextInput label={'备注'} source="remark" validate={required()}/>
+                <TextInput label={'备注'} source="remark"/>
             </SimpleForm>
         </Create>
     );

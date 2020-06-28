@@ -15,7 +15,7 @@ import javax.validation.constraints.Size;
 @Getter
 @Setter
 @ToString
-public class AttachmentAdd extends OperatorCapableImpl<Long> {
+public class AttachmentAdd extends OperatorCapableImpl<String> {
 
     private static final long serialVersionUID = 0L;
 
@@ -29,7 +29,7 @@ public class AttachmentAdd extends OperatorCapableImpl<Long> {
     private String path;
     /** 大小（字节） */
     @NotNull
-    private Long size;
+    private Long sizes;
     /** 状态编码：临时、生效、删除 */
     @NotNull
     @Size(min = 1, max = 15)

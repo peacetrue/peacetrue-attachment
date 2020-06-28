@@ -3,5 +3,5 @@ description '附件客户端'
 dependencies {
     api project(":peacetrue-attachment-service-api")
     api 'org.springframework.data:spring-data-commons'
-    api 'org.springframework.cloud:spring-cloud-starter-openfeign'
+    api 'com.playtika.reactivefeign:feign-reactor-spring-configuration'
 }

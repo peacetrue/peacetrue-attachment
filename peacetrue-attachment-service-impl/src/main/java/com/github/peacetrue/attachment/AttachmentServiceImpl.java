@@ -45,7 +45,7 @@ public class AttachmentServiceImpl implements AttachmentService {
                 CriteriaUtils.nullableCriteria(CriteriaUtils.smartIn("id"), params::getId),
                 CriteriaUtils.nullableCriteria(Criteria.where("name")::like, value -> "%" + value + "%", params::getName),
                 CriteriaUtils.nullableCriteria(Criteria.where("path")::like, value -> "%" + value + "%", params::getPath),
-                CriteriaUtils.nullableCriteria(Criteria.where("size")::is, params::getSize),
+                CriteriaUtils.nullableCriteria(Criteria.where("sizes")::is, params::getSizes),
                 CriteriaUtils.nullableCriteria(Criteria.where("stateCode")::like, value -> "%" + value + "%", params::getStateCode),
                 CriteriaUtils.nullableCriteria(Criteria.where("remark")::like, value -> "%" + value + "%", params::getRemark),
                 CriteriaUtils.nullableCriteria(Criteria.where("creatorId")::is, params::getCreatorId),
@@ -84,7 +84,7 @@ public class AttachmentServiceImpl implements AttachmentService {
                             .reduce(new ArrayList<>(), StreamUtils.reduceToCollection())
                             .map(item -> new PageImpl<>(item, finalPageable, total));
                 })
-                .switchIfEmpty(Mono.just(new PageImpl<>(Collections.emptyList())));
+                .switchIfEmpty(Mono.just(new PageImpl<>(Collections.emptyList(), finalPageable, 0L)));
     }
 
     @Override

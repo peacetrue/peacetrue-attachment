@@ -13,7 +13,7 @@ import lombok.*;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class AttachmentQuery extends OperatorCapableImpl<Long> {
+public class AttachmentQuery extends OperatorCapableImpl<String> {
 
     public static final AttachmentQuery DEFAULT = new AttachmentQuery();
 
@@ -26,7 +26,7 @@ public class AttachmentQuery extends OperatorCapableImpl<Long> {
     /** 路径 */
     private String path;
     /** 大小（字节） */
-    private Long size;
+    private Long sizes;
     /** 状态编码：临时、生效、删除 */
     private String stateCode;
     /** 备注 */

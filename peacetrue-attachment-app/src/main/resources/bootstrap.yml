@@ -3,13 +3,17 @@ spring:
     name: peacetrue-attachment
   cloud:
     config:
-      uri: http://localhost:8888
+      uri: ${MICROSERVICE_PROTOCOL:http}://${MICROSERVICE_SECURITY_USERNAME:peacetrue}:${MICROSERVICE_SECURITY_PASSWORD:password}@${MICROSERVICE_CONFIG_HOST:localhost}:${MICROSERVICE_CONFIG_PORT:8888}
       fail-fast: true
 
 ---
 
-spring:
-  profiles: prod
-  cloud:
-    config:
-      uri: https://peacetrue:${MICROSERVICE_SECURITY_PASSWORD}@peacetrue.cn:8888
+spring.profiles: prod
+
+MICROSERVICE_CONFIG_HOST: peacetrue.cn
+
+---
+
+spring.profiles: https
+
+MICROSERVICE_PROTOCOL: https

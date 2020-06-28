@@ -28,13 +28,13 @@ public class Attachment implements Serializable {
     /** 路径 */
     private String path;
     /** 大小（字节） */
-    private Long size;
+    private Long sizes;
     /** 状态编码：临时、生效、删除 */
     private String stateCode;
     /** 备注 */
     private String remark;
     /** 创建者主键 */
-    private Long creatorId;
+    private String creatorId;
     /** 创建时间 */
     private LocalDateTime createdTime;
 

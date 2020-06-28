@@ -5,6 +5,7 @@ dependencies {
     implementation "com.github.peacetrue:peacetrue-spring"
     implementation "org.springframework.boot:spring-boot-starter-webflux"
     implementation "org.springframework.data:spring-data-commons"
+    implementation "org.aspectj:aspectjweaver"
 
     testImplementation project(':peacetrue-attachment-service-impl')
     testImplementation project(path: ':peacetrue-attachment-service-impl', configuration: 'testArtifacts')
