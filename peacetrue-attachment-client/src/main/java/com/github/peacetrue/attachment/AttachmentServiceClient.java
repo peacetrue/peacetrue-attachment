@@ -19,14 +19,14 @@ import javax.annotation.Nullable;
  *
  * @author xiayx
  */
-@ReactiveFeignClient(name = "peacetrue-attachment", url = "${peacetrue.attachment.url:${peacetrue.server.url:}}")
-public interface AttachmentServiceClient extends AttachmentService {
+@ReactiveFeignClient(name = "peacetrue-attachment", url = "${peacetrue.Attachment.url:${peacetrue.server.url:}}")
+public interface AttachmentServiceClient {
 
     @PostMapping(value = "/attachments")
     Mono<AttachmentVO> add(AttachmentAdd params);
 
     @GetMapping(value = "/attachments", params = "page")
-    Mono<Page<AttachmentVO>> query(@Nullable @SpringQueryMap AttachmentQuery params, Pageable pageable, @SpringQueryMap String... projection);
+    Mono<Page<AttachmentVO>> query(@Nullable @SpringQueryMap AttachmentQuery params, @Nullable Pageable pageable, @SpringQueryMap String... projection);
 
     @GetMapping(value = "/attachments", params = "sort")
     Flux<AttachmentVO> query(@SpringQueryMap AttachmentQuery params, Sort sort, @SpringQueryMap String... projection);

@@ -14,7 +14,7 @@ import javax.validation.constraints.NotNull;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class AttachmentDelete extends OperatorCapableImpl<String> {
+public class AttachmentDelete extends OperatorCapableImpl<Long> {
 
     private static final long serialVersionUID = 0L;
 

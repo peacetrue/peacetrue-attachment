@@ -8,8 +8,8 @@ export const AttachmentShow = (props) => {
             <SimpleShowLayout>
                 <TextField label={'名称'} source="name"/>
                 <TextField label={'路径'} source="path"/>
-                <TextField label={'大小（字节）'} source="size"/>
-                <TextField label={'状态编码：临时、生效、删除'} source="stateCode"/>
+                <TextField label={'大小（字节）'} source="sizes"/>
+                <TextField label={'状态编码'} source="stateId"/>
                 <TextField label={'备注'} source="remark"/>
                 <TextField label={'创建者主键'} source="creatorId"/>
                 <DateField label={'创建时间'} source="createdTime" showTime/>

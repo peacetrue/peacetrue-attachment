@@ -29,12 +29,12 @@ public class Attachment implements Serializable {
     private String path;
     /** 大小（字节） */
     private Long sizes;
-    /** 状态编码：临时、生效、删除 */
-    private String stateCode;
+    /** 状态编码. 1、临时，2、生效、3、删除 */
+    private Integer stateId;
     /** 备注 */
     private String remark;
     /** 创建者主键 */
-    private String creatorId;
+    private Long creatorId;
     /** 创建时间 */
     private LocalDateTime createdTime;
 

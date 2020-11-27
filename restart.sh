@@ -1,15 +1,8 @@
 #!/bin/bash
 
-env=${1-default}
-
-./kill.sh
+env=${1-prod}
 
 ./gradlew clean
 ./gradlew bootJar
 
-module="peacetrue-attachment-app"
-cd "$module" || exit
-echo "run jar $module at $(pwd)"
-java -jar "build/libs/$module-1.0.0-SNAPSHOT.jar" --spring.profiles.active="$env,log" &
-
-#  chmod 777 docker.sh gradlew gradlew.bat kill.sh restart.sh
+ptrestart "peacetrue-attachment-app" "8606" "$env"

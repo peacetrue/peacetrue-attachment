@@ -1,10 +1,12 @@
 buildscript {
     repositories {
+        mavenCentral()
         maven { url 'https://repo.spring.io/plugins-release' }
     }
 
     dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:2+")
+//        classpath("org.springframework.boot:spring-boot-gradle-plugin:2.3.3.RELEASE")
+        classpath 'org.springframework.boot:spring-boot-gradle-plugin:2.3.1.RELEASE'
     }
 }
 

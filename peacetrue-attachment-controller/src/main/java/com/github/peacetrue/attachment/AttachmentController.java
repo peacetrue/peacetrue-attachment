@@ -1,11 +1,14 @@
 package com.github.peacetrue.attachment;
 
+import com.github.peacetrue.file.FileController;
+import com.github.peacetrue.spring.util.BeanUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.MediaType;
+import org.springframework.http.codec.multipart.FilePart;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -22,6 +25,8 @@ public class AttachmentController {
 
     @Autowired
     private AttachmentService attachmentService;
+    @Autowired
+    private FileController fileController;
 
     @PostMapping(consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     public Mono<AttachmentVO> addByForm(AttachmentAdd params) {
@@ -87,6 +92,30 @@ public class AttachmentController {
     public Mono<Integer> deleteByPath(AttachmentDelete params) {
         log.info("删除附件信息(请求路径+URL参数变量)[{}]", params);
         return attachmentService.delete(params);
+    }
+
+    @ResponseBody
+    @PostMapping(params = "fileCount=1")
+    public Mono<AttachmentVO> upload(@RequestPart("file") Mono<FilePart> file, String remark) {
+        log.info("上传单个附件");
+        return fileController.upload(file)
+                .flatMap(fileVO -> {
+                    AttachmentAdd attachmentAdd = BeanUtils.map(fileVO, AttachmentAdd.class);
+                    attachmentAdd.setRemark(remark);
+                    return attachmentService.add(attachmentAdd);
+                });
+    }
+
+    @ResponseBody
+    @PostMapping(params = "fileCount=n")
+    public Flux<AttachmentVO> upload(@RequestPart("files") Flux<FilePart> files, String remark) {
+        log.info("上传多个附件");
+        return fileController.upload(files)
+                .flatMap(fileVO -> {
+                    AttachmentAdd attachmentAdd = BeanUtils.map(fileVO, AttachmentAdd.class);
+                    attachmentAdd.setRemark(remark);
+                    return attachmentService.add(attachmentAdd);
+                });
     }
 
 

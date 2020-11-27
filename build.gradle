@@ -7,28 +7,9 @@ buildscript {
     }
 
     dependencies {
-        classpath('com.github.peacetrue.generator:peacetrue-generator-plugin:1.1.0-SNAPSHOT')
-        classpath 'com.github.peacetrue.template:peacetrue-template-model-content:3.0.0-SNAPSHOT', {
-            exclude group: 'ch.qos.logback'
-        }
-        classpath('com.h2database:h2:1.4.196')
-        classpath "io.spring.gradle:dependency-management-plugin:1+"
+        classpath "io.spring.gradle:dependency-management-plugin:1.0.6.RELEASE"
+//        classpath 'io.spring.gradle:dependency-management-plugin:1.0.9.RELEASE'
     }
-}
-
-apply plugin: 'com.github.peacetrue.generator'
-peacetrueGenerate {
-    properties = [
-            'peacetrue.generator.target-path': "$rootDir",
-            'spring.datasource.schema'       : "file:$rootDir/peacetrue-attachment-service-impl/src/main/resources/schema-h2.sql",
-    ]
-    propertiesPath = "file:$rootDir/peacetrue-attachment-service-impl/src/test/resources/application-attachment-service-test.yml"
-    context = [
-            'project-name'     : "peacetrue-attachment",
-            'basePackageName'  : "com.github.peacetrue.attachment",
-            'DomainName'       : 'Attachment',
-            'domainDescription': '附件',
-    ]
 }
 
 
@@ -44,15 +25,15 @@ allprojects { project ->
 
     repositories {
         mavenLocal()
-        maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
         mavenCentral()
-        jcenter()
+        maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+        maven { url "https://repo.spring.io/plugins-release" }
     }
 
     apply plugin: "io.spring.dependency-management"
     dependencyManagement {
         imports {
-            mavenBom "com.github.peacetrue:peacetrue-dependencies:2+"
+            mavenBom "com.github.peacetrue:peacetrue-dependencies:2.0.0-SNAPSHOT"
         }
     }
 

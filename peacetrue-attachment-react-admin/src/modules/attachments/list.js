@@ -5,9 +5,9 @@ const Filters = (props) => (
     <Filter {...props}>
         <TextInput label={'名称'} source="name" allowEmpty alwaysOn/>
         <TextInput label={'路径'} source="path" allowEmpty alwaysOn/>
-        {/*<TextInput label={'状态编码：临时、生效、删除'} source="stateCode" allowEmpty alwaysOn/>*/}
-        {/*<DateInput label={'创建时间起始值'} source="createdTime.lowerBound" allowEmpty alwaysOn/>*/}
-        {/*<DateInput label={'创建时间结束值'} source="createdTime.upperBound" allowEmpty alwaysOn/>*/}
+        <TextInput label={'备注'} source="remark" allowEmpty alwaysOn/>
+        <DateInput label={'创建时间起始值'} source="createdTime.lowerBound" allowEmpty alwaysOn/>
+        <DateInput label={'创建时间结束值'} source="createdTime.upperBound" allowEmpty alwaysOn/>
     </Filter>
 );
 
@@ -19,8 +19,8 @@ export const AttachmentList = props => {
             <Datagrid rowClick="show">
                 <TextField label={'名称'} source="name"/>
                 <TextField label={'路径'} source="path"/>
-                <TextField label={'大小（字节）'} source="size"/>
-                <TextField label={'状态编码：临时、生效、删除'} source="stateCode"/>
+                <TextField label={'大小（字节）'} source="sizes"/>
+                <TextField label={'状态编码'} source="stateId"/>
                 <TextField label={'备注'} source="remark"/>
                 <TextField label={'创建者主键'} source="creatorId"/>
                 <DateField label={'创建时间'} source="createdTime" showTime/>

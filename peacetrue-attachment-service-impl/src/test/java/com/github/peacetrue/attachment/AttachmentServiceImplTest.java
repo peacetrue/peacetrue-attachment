@@ -18,8 +18,8 @@ import reactor.test.StepVerifier;
 class AttachmentServiceImplTest {
 
     public static final EasyRandom EASY_RANDOM = new EasyRandom();
-    public static final AttachmentModify MODIFY = EASY_RANDOM.nextObject(AttachmentModify.class);
     public static final AttachmentAdd ADD = EASY_RANDOM.nextObject(AttachmentAdd.class);
+    public static final AttachmentModify MODIFY = EASY_RANDOM.nextObject(AttachmentModify.class);
     public static AttachmentVO vo;
 
     static {
