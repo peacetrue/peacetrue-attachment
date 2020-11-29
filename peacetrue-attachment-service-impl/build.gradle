@@ -15,8 +15,9 @@ description '附件服务实现'
 
 dependencies {
 
-    api project(":peacetrue-attachment-service-api")
     api 'org.slf4j:slf4j-api'
+    api project(":peacetrue-attachment-service-api")
+    api 'com.github.peacetrue.file:peacetrue-file-service-api:1.0.0-SNAPSHOT'
     implementation 'com.github.peacetrue:peacetrue-spring'
     implementation 'org.apache.commons:commons-lang3'
     implementation 'org.springframework.boot:spring-boot-starter-data-r2dbc'

@@ -1,6 +1,7 @@
 package com.github.peacetrue.attachment;
 
 import com.github.peacetrue.file.FileController;
+import com.github.peacetrue.file.FileService;
 import com.github.peacetrue.spring.util.BeanUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.MediaType;
 import org.springframework.http.codec.multipart.FilePart;
+import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -25,6 +27,8 @@ public class AttachmentController {
 
     @Autowired
     private AttachmentService attachmentService;
+    @Autowired
+    private FileService fileService;
     @Autowired
     private FileController fileController;
 
@@ -107,7 +111,7 @@ public class AttachmentController {
     }
 
     @ResponseBody
-    @PostMapping(params = "fileCount=n")
+    @PostMapping(params = "fileCount")
     public Flux<AttachmentVO> upload(@RequestPart("files") Flux<FilePart> files, String remark) {
         log.info("上传多个附件");
         return fileController.upload(files)
@@ -115,6 +119,18 @@ public class AttachmentController {
                     AttachmentAdd attachmentAdd = BeanUtils.map(fileVO, AttachmentAdd.class);
                     attachmentAdd.setRemark(remark);
                     return attachmentService.add(attachmentAdd);
+                });
+    }
+
+    /** {@link FileController#DISPOSITION_TYPE_ATTACHMENT} */
+    @GetMapping(value = "/{id}", params = "dispositionType")
+    public Mono<Void> download(ServerHttpResponse response,
+                               String dispositionType,
+                               @PathVariable Long id) {
+        return attachmentService.get(new AttachmentGet(id))
+                .flatMap(vo -> {
+                    String absoluteFilePath = fileService.getAbsoluteFilePath(vo.getPath());
+                    return FileController.writeLocalFile(response, dispositionType, absoluteFilePath, vo.getName());
                 });
     }
 

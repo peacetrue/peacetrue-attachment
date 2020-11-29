@@ -46,7 +46,6 @@ public class AttachmentServiceImpl implements AttachmentService {
                 CriteriaUtils.nullableCriteria(Criteria.where("name")::like, value -> "%" + value + "%", params::getName),
                 CriteriaUtils.nullableCriteria(Criteria.where("path")::like, value -> "%" + value + "%", params::getPath),
                 CriteriaUtils.nullableCriteria(Criteria.where("sizes")::is, params::getSizes),
-                CriteriaUtils.nullableCriteria(Criteria.where("remark")::like, value -> "%" + value + "%", params::getRemark),
                 CriteriaUtils.nullableCriteria(Criteria.where("creatorId")::is, params::getCreatorId),
                 CriteriaUtils.nullableCriteria(Criteria.where("createdTime")::greaterThanOrEquals, params.getCreatedTime()::getLowerBound),
                 CriteriaUtils.nullableCriteria(Criteria.where("createdTime")::lessThan, DateUtils.DATE_CELL_EXCLUDE, params.getCreatedTime()::getUpperBound)
@@ -58,7 +57,8 @@ public class AttachmentServiceImpl implements AttachmentService {
     public Mono<AttachmentVO> add(AttachmentAdd params) {
         log.info("新增附件信息[{}]", params);
         Attachment entity = BeanUtils.map(params, Attachment.class);
-        entity.setStateId(1);
+        if (entity.getStateId() == null) entity.setStateId(1);
+        if (entity.getRemark() == null) entity.setRemark("");
         entity.setCreatorId(params.getOperatorId());
         entity.setCreatedTime(LocalDateTime.now());
         return entityTemplate.insert(entity)
