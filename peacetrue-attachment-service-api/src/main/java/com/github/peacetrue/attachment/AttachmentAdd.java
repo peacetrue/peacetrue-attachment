@@ -21,11 +21,11 @@ public class AttachmentAdd extends OperatorCapableImpl<Long> {
 
     /** 名称 */
     @NotNull
-    @Size(min = 1, max = 255)
+    @Size(min = 1, max = 32)
     private String name;
     /** 路径 */
     @NotNull
-    @Size(min = 1, max = 1022)
+    @Size(min = 1, max = 255)
     private String path;
     /** 大小（字节） */
     @NotNull

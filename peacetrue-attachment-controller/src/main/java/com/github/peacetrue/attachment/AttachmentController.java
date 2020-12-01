@@ -1,5 +1,7 @@
 package com.github.peacetrue.attachment;
 
+import com.github.peacetrue.core.Operators;
+import com.github.peacetrue.file.FileAdd;
 import com.github.peacetrue.file.FileController;
 import com.github.peacetrue.file.FileService;
 import com.github.peacetrue.spring.util.BeanUtils;
@@ -9,7 +11,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.MediaType;
-import org.springframework.http.codec.multipart.FilePart;
 import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
@@ -29,8 +30,6 @@ public class AttachmentController {
     private AttachmentService attachmentService;
     @Autowired
     private FileService fileService;
-    @Autowired
-    private FileController fileController;
 
     @PostMapping(consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     public Mono<AttachmentVO> addByForm(AttachmentAdd params) {
@@ -100,24 +99,18 @@ public class AttachmentController {
 
     @ResponseBody
     @PostMapping(params = "fileCount=1")
-    public Mono<AttachmentVO> upload(@RequestPart("file") Mono<FilePart> file, String remark) {
+    public Mono<AttachmentVO> upload(Mono<AttachmentUpload> mono) {
         log.info("上传单个附件");
-        return fileController.upload(file)
-                .flatMap(fileVO -> {
-                    AttachmentAdd attachmentAdd = BeanUtils.map(fileVO, AttachmentAdd.class);
-                    attachmentAdd.setRemark(remark);
-                    return attachmentService.add(attachmentAdd);
-                });
-    }
-
-    @ResponseBody
-    @PostMapping(params = "fileCount")
-    public Flux<AttachmentVO> upload(@RequestPart("files") Flux<FilePart> files, String remark) {
-        log.info("上传多个附件");
-        return fileController.upload(files)
-                .flatMap(fileVO -> {
-                    AttachmentAdd attachmentAdd = BeanUtils.map(fileVO, AttachmentAdd.class);
-                    attachmentAdd.setRemark(remark);
+        return mono
+                .flatMap(attachmentUpload -> {
+                    FileAdd fileAdd = BeanUtils.map(attachmentUpload, FileAdd.class);
+                    return fileService.add(fileAdd)
+                            .zipWhen(fileVO -> Mono.just(Operators.setOperator(fileAdd, attachmentUpload)));
+                })
+                .flatMap(tuple2 -> {
+                    AttachmentAdd attachmentAdd = BeanUtils.map(tuple2.getT1(), AttachmentAdd.class);
+                    Operators.setOperator(tuple2.getT2(), attachmentAdd);
+                    attachmentAdd.setRemark(tuple2.getT2().getRemark());
                     return attachmentService.add(attachmentAdd);
                 });
     }
@@ -129,10 +122,9 @@ public class AttachmentController {
                                @PathVariable Long id) {
         return attachmentService.get(new AttachmentGet(id))
                 .flatMap(vo -> {
-                    String absoluteFilePath = fileService.getAbsoluteFilePath(vo.getPath());
+                    String absoluteFilePath = fileService.getAbsolutePath(vo.getPath());
                     return FileController.writeLocalFile(response, dispositionType, absoluteFilePath, vo.getName());
                 });
     }
-
 
 }

@@ -1,5 +1,7 @@
 package com.github.peacetrue.attachment;
 
+import com.github.peacetrue.core.Operators;
+import com.github.peacetrue.file.FileDelete;
 import com.github.peacetrue.file.FileService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,13 +24,14 @@ public class AttachmentListener {
 
     @Order(0)
     @EventListener
-    public void deleteLocalFileAfterAttachmentDelete(PayloadApplicationEvent<AttachmentDelete> event) {
+    public void deleteFileAfterAttachmentDelete(PayloadApplicationEvent<AttachmentDelete> event) {
         AttachmentVO source = (AttachmentVO) event.getSource();
-        log.info("删除附件[{}]后删除本地文件[{}]", source.getId(), source.getPath());
-        fileService.delete(source.getPath())
+        log.info("删除附件后删除本地文件[{}]", source);
+        FileDelete fileDelete = Operators.setOperator(event.getPayload(), new FileDelete(source.getPath()));
+        fileService.delete(fileDelete)
                 .publishOn(Schedulers.elastic())
                 .subscribe(result -> {
-                    if (result) log.info("文件[{}]删除成功", source.getPath());
+                    if (result > 0) log.info("文件[{}]删除成功", source.getPath());
                     else log.warn("文件[{}]删除失败", source.getPath());
                 });
     }
