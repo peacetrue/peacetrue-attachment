@@ -2,11 +2,15 @@ package com.github.peacetrue.attachment;
 
 import com.github.peacetrue.spring.util.BeanUtils;
 import org.jeasy.random.EasyRandom;
+import org.jeasy.random.EasyRandomParameters;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.test.context.ActiveProfiles;
 import reactor.test.StepVerifier;
+
+import java.io.Serializable;
 
 
 /**
@@ -14,10 +18,11 @@ import reactor.test.StepVerifier;
  * @since : 2020-05-22 16:43
  **/
 @SpringBootTest(classes = TestServiceAttachmentAutoConfiguration.class)
+@ActiveProfiles("attachment-service-test")
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class AttachmentServiceImplTest {
 
-    public static final EasyRandom EASY_RANDOM = new EasyRandom();
+    public static final EasyRandom EASY_RANDOM = new EasyRandom(new EasyRandomParameters().randomize(Serializable.class, () -> "operatorName"));
     public static final AttachmentAdd ADD = EASY_RANDOM.nextObject(AttachmentAdd.class);
     public static final AttachmentModify MODIFY = EASY_RANDOM.nextObject(AttachmentModify.class);
     public static AttachmentVO vo;

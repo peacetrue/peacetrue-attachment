@@ -31,7 +31,7 @@ public class FileListenerInAttachment {
         AttachmentAdd attachmentAdd = BeanUtils.map(source, AttachmentAdd.class);
         Operators.setOperator(event.getPayload(), attachmentAdd);
         attachmentService.add(attachmentAdd)
-                .publishOn(Schedulers.elastic())
+                .subscribeOn(Schedulers.boundedElastic())
                 .subscribe();
     }
 }

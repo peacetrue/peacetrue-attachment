@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
 import java.util.function.Consumer;
@@ -17,15 +18,16 @@ import java.util.function.Consumer;
  */
 @SpringBootTest(classes = TestControllerAttachmentAutoConfiguration.class)
 @AutoConfigureWebTestClient
+@ActiveProfiles({"attachment-service-test", "attachment-controller-test"})
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class AttachmentControllerTest {
+class AttachmentControllerTest {
 
     @Autowired
     private WebTestClient client;
 
     @Test
     @Order(10)
-    public void add() {
+    void add() {
         this.client.post().uri("/attachments")
                 .bodyValue(AttachmentServiceImplTest.ADD)
                 .accept(MediaType.APPLICATION_JSON)
@@ -37,7 +39,7 @@ public class AttachmentControllerTest {
 
     @Test
     @Order(20)
-    public void queryForPage() {
+    void queryForPage() {
         this.client.get()
                 .uri("/attachments?page=0")
                 .accept(MediaType.APPLICATION_JSON)
@@ -49,7 +51,7 @@ public class AttachmentControllerTest {
 
     @Test
     @Order(30)
-    public void queryForList() {
+    void queryForList() {
         this.client.get()
                 .uri("/attachments")
                 .accept(MediaType.APPLICATION_JSON)
@@ -61,7 +63,7 @@ public class AttachmentControllerTest {
 
     @Test
     @Order(40)
-    public void get() {
+    void get() {
         this.client.get()
                 .uri("/attachments/{0}", AttachmentServiceImplTest.vo.getId())
                 .accept(MediaType.APPLICATION_JSON)
@@ -74,7 +76,7 @@ public class AttachmentControllerTest {
 
     @Test
     @Order(50)
-    public void modify() {
+    void modify() {
         AttachmentModify modify = AttachmentServiceImplTest.MODIFY;
         modify.setId(AttachmentServiceImplTest.vo.getId());
         this.client.put()
@@ -89,7 +91,7 @@ public class AttachmentControllerTest {
 
     @Test
     @Order(60)
-    public void delete() {
+    void delete() {
         this.client.delete()
                 .uri("/attachments/{0}", AttachmentServiceImplTest.vo.getId())
                 .accept(MediaType.APPLICATION_JSON)

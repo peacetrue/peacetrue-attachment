@@ -1,0 +1,11 @@
+logging:
+  level:
+    com.github.peacetrue: trace
+#    org.springframework: debug
+
+peacetrue:
+  init:
+    schema-script-locations:
+      'com.github.peacetrue.attachment.Attachment': /schema-attachment-h2.sql
+  file:
+    base-path: /Users/xiayx/Documents/Projects/peacetrue-attachment/01-upload

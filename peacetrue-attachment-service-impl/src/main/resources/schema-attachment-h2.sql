@@ -2,7 +2,7 @@ DROP TABLE IF EXISTS attachment;
 CREATE TABLE attachment
 (
     id           BIGINT AUTO_INCREMENT PRIMARY KEY NOT NULL,
-    name         VARCHAR(32)                      NOT NULL COMMENT '名称',
+    name         VARCHAR(32)                       NOT NULL COMMENT '名称',
     path         VARCHAR(255)                      NOT NULL COMMENT '路径',
     sizes        BIGINT                            NOT NULL COMMENT '大小（字节）',
     state_id     TINYINT                           NOT NULL COMMENT '状态编码. 1、临时，2、生效、3、删除',
