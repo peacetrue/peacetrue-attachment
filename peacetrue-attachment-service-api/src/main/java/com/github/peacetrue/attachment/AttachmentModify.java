@@ -1,6 +1,6 @@
 package com.github.peacetrue.attachment;
 
-import com.github.peacetrue.core.OperatorCapableImpl;
+import com.github.peacetrue.core.OperatorImpl;
 import lombok.*;
 
 import javax.validation.constraints.Max;
@@ -17,7 +17,7 @@ import javax.validation.constraints.Size;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class AttachmentModify extends OperatorCapableImpl<Long> {
+public class AttachmentModify extends OperatorImpl<Long> {
 
     private static final long serialVersionUID = 0L;
 

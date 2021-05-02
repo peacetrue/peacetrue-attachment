@@ -29,10 +29,11 @@ public class AttachmentListener {
         log.info("删除附件后删除本地文件[{}]", source);
         FileDelete fileDelete = Operators.setOperator(event.getPayload(), new FileDelete(source.getPath()));
         fileService.delete(fileDelete)
-                .publishOn(Schedulers.elastic())
-                .subscribe(result -> {
+                .doOnNext(result -> {
                     if (result > 0) log.info("文件[{}]删除成功", source.getPath());
                     else log.warn("文件[{}]删除失败", source.getPath());
-                });
+                })
+                .subscribeOn(Schedulers.boundedElastic())
+                .subscribe();
     }
 }

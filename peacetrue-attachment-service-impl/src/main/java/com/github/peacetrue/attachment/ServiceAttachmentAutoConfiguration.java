@@ -1,5 +1,6 @@
 package com.github.peacetrue.attachment;
 
+import com.github.peacetrue.spring.core.io.support.YamlPropertySourceFactory;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -13,7 +14,7 @@ import java.util.Objects;
 @Configuration
 @EnableConfigurationProperties(ServiceAttachmentProperties.class)
 @ComponentScan(basePackageClasses = ServiceAttachmentAutoConfiguration.class)
-@PropertySource("classpath:/application-attachment-service.yml")
+@PropertySource(value = "classpath:/application-attachment-service.yml", factory = YamlPropertySourceFactory.class)
 public class ServiceAttachmentAutoConfiguration {
 
     private ServiceAttachmentProperties properties;

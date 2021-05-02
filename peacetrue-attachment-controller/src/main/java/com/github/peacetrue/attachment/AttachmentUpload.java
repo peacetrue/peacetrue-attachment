@@ -1,6 +1,6 @@
 package com.github.peacetrue.attachment;
 
-import com.github.peacetrue.core.OperatorCapableImpl;
+import com.github.peacetrue.core.OperatorImpl;
 import lombok.*;
 import org.springframework.http.codec.multipart.FilePart;
 
@@ -12,7 +12,7 @@ import javax.validation.constraints.Size;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class AttachmentUpload extends OperatorCapableImpl<Long> {
+public class AttachmentUpload extends OperatorImpl<Long> {
 
     private static final long serialVersionUID = 0L;
 

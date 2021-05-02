@@ -1,0 +1,4 @@
+peacetrue:
+  init:
+    conditional-script-locations:
+      'com.github.peacetrue.attachment.Attachment': /schema-attachment-mysql.sql

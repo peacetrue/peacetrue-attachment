@@ -1,6 +1,6 @@
 package com.github.peacetrue.attachment;
 
-import com.github.peacetrue.core.OperatorCapableImpl;
+import com.github.peacetrue.core.OperatorImpl;
 import com.github.peacetrue.core.Range;
 import lombok.*;
 
@@ -13,7 +13,7 @@ import lombok.*;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class AttachmentQuery extends OperatorCapableImpl<Long> {
+public class AttachmentQuery extends OperatorImpl<Long> {
 
     public static final AttachmentQuery DEFAULT = new AttachmentQuery();
 
